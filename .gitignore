@@ -2,11 +2,11 @@
 /DataStoreLight.rbxlx
 
 # Roblox Studio lock files
-/*.rbxlx.lock
-/*.rbxl.lock
+*.rbxlx.lock
+*.rbxl.lock
 
 # Ignore Packages directory and specific files
-/*.Packages
-/*.aftman.toml
-/*.default.project.json
-/*.wally.lock
+*.Packages
+*.aftman.toml
+*.default.project.json
+*.wally.lock
