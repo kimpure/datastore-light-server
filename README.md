@@ -5,6 +5,10 @@
 # How To Use?
 
 ```lua
+
+```
+
+```lua
 local DataStoreLight = require(path to)
 ```
 

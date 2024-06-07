@@ -1,0 +1,8 @@
+local Players = game:GetService("Players")
+local DataStoreLight = require(script.Parent:WaitForChild('DataStoreLight'))
+Players.PlayerAdded:Connect(function(player)
+    DataStoreLight.Load(player)
+    print(DataStoreLight.Get(player , 'qweqtetqe'))
+    DataStoreLight.Set(player , 'qweqtetqe' , "아ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+    DataStoreLight.Save(player)
+end)
