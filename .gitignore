@@ -5,7 +5,8 @@
 /*.rbxlx.lock
 /*.rbxl.lock
 
-/*.Packages
-/*.aftman.toml
-/*.default.project.json
-/*.wally.lock
+# Ignore Packages directory and specific files
+*.Packages
+*.aftman.toml
+*.default.project.json
+*.wally.lock
