@@ -1,0 +1,9 @@
+{
+  "name": "DataStoreLight",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+        "$path": "Packages"
+    }
+  }
+}

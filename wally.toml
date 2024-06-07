@@ -1,0 +1,10 @@
+[package]
+name = "kimpure/datastorelight"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+msgpack-luau = "cipharius/msgpack-luau@^0.3.0"
+base91 = "dekkonot/base91@^1.1.0"
+rbxzstd = "caveful-games/rbxzstd@^0.1.0"
