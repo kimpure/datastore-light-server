@@ -10,13 +10,14 @@ local PlayerData2 = {}
 local PlayerBeforeDataInServer = {}
 
 local DataStoreLight = {}
-DataStoreLight.__index = DataStoreLight
 
---//Setting
+
+--// DataTable
 DataStoreLight.DataTable = {
     qweqtetqe = 0;
 }
 
+--// Setting
 DataStoreLight.Setting = {
     Debug = false;
 }
@@ -43,18 +44,18 @@ end
 function DataStoreLight.Load(Player:Player)
     for k,v in DataStoreLight.DataTable do
         DataStoreLight:Debug(`DataName : {k} , Player User Id : {Player.UserId}`)
-
-        DataStoreLight:waitForRequest(Enum.DataStoreRequestType.GetAsync)
         
         PlayerData1[Player.UserId] = {}
         PlayerData2[Player.UserId] = {}
         PlayerBeforeDataInServer[Player.UserId] = {}
 
+        DataStoreLight:waitForRequest(Enum.DataStoreRequestType.GetAsync)
         local K1 = DataStoreService:GetDataStore(`{k}:1`):GetAsync(Player.UserId)
+
+        DataStoreLight:waitForRequest(Enum.DataStoreRequestType.GetAsync)
         local K2 = DataStoreService:GetDataStore(`{k}:2`):GetAsync(Player.UserId)
 
         if K1 then
-            --// 버퍼화 해제 (K1)
 
            
             local _o = string.sub(K1 , 1 , 1)
@@ -78,7 +79,6 @@ function DataStoreLight.Load(Player:Player)
 
 
         if K2 then
-            --// 버퍼화 해제 (K2)
 
 
             local _o = string.sub(K2 , 1 , 1)
