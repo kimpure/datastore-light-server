@@ -14,7 +14,7 @@ local DataStoreLight = {}
 
 --// DataTable
 DataStoreLight.DataTable = {
-    qweqtetqe = 0;
+    eee = 0;
 }
 
 --// Setting
@@ -61,13 +61,13 @@ function DataStoreLight.Load(Player:Player)
             local _o = string.sub(K1 , 1 , 1)
             K1 = string.sub(K1 , 2)
 
-            if _o == '\30' then
+            if _o == '\20' then
                 DataStoreLight:Debug(`압축돼지 않은 데이터 : {K1}`)
 
                 K1 = msgpack.decode(msgpack.utf8Decode(K1))
             else
                 DataStoreLight:Debug(`압축돼어있는 데이터 : {K1}`)
-
+                
                 K1 = msgpack.decode(msgpack.utf8Decode(buffer.tostring(rbxzstd.decompress(base91.decodeString(K1)))))
             end
 
@@ -84,7 +84,7 @@ function DataStoreLight.Load(Player:Player)
             local _o = string.sub(K2 , 1 , 1)
             K2 = string.sub(K2 , 2)
 
-            if _o == '\30' then
+            if _o == '\20' then
                 DataStoreLight:Debug(`압축돼지 않은 데이터 : {K2}`)
 
                 K2 = msgpack.decode(msgpack.utf8Decode(K2))
@@ -100,7 +100,7 @@ function DataStoreLight.Load(Player:Player)
 end
 
 --// DataStoreLight 의 PlayerData 라는 저장돼어있는 테이블에서 Data 를 가져옴
-function DataStoreLight.Get(Player:Player , DataName:string) : {any}
+function DataStoreLight.Get<T>(Player:Player , DataName:string) : {any}
     if PlayerData1[Player.UserId] then
         if PlayerData1[Player.UserId][DataName] then
             return PlayerData1[Player.UserId][DataName] , PlayerData2[Player.UserId][DataName]
@@ -133,6 +133,8 @@ function DataStoreLight.Save(Player:Player)
             local Buffer_Data1 = msgpack.utf8Encode(msgpack.encode(Data1))
             local Compress_Data1 = rbxzstd.compress(buffer.fromstring(Buffer_Data1))
             
+            -- print(Buffer_Data1 ,)
+
             DataStoreLight:Debug(`Data1 : {Compress_Data1}`)
             
             if Compress_Data1 then
