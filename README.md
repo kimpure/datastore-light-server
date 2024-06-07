@@ -8,7 +8,14 @@
 # How To Use?
 
 ```lua
-local DataStoreLight = require(path to)
+local Players = game:GetService("Players")
+local DataStoreLight = require(path)
+Players.PlayerAdded:Connect(function(player)
+    DataStoreLight.Load(player)
+    print(DataStoreLight.Get(player , 'qweqtetqe'))
+    DataStoreLight.Set(player , 'qweqtetqe' , "아ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+    DataStoreLight.Save(player)
+end)
 ```
 
 Load
