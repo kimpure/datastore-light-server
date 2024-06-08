@@ -41,7 +41,7 @@ function DataStoreLight:waitForRequest(requestType)
 end
 
 --// Player 의 Data 를 DataStoreLight.DataTable 에 값에 있는 값들마다 로드
-function DataStoreLight.Load(Player:Player)
+function DataStoreLight.load(Player:Player)
     for k,v in DataStoreLight.DataTable do
         DataStoreLight:Debug(`DataName : {k} , Player User Id : {Player.UserId}`)
         
@@ -101,7 +101,7 @@ function DataStoreLight.Load(Player:Player)
 end
 
 --// DataStoreLight 의 PlayerData 라는 저장돼어있는 테이블에서 Data 를 가져옴
-function DataStoreLight.Get<T>(Player:Player , DataName:string) : {any}
+function DataStoreLight.get<T>(Player:Player , DataName:string) : {any}
     if PlayerData1[Player.UserId] then
         if PlayerData1[Player.UserId][DataName] ~= nil then
             return PlayerData1[Player.UserId][DataName] , PlayerData2[Player.UserId][DataName]
@@ -110,7 +110,7 @@ function DataStoreLight.Get<T>(Player:Player , DataName:string) : {any}
 end
 
 --// DataStoreLight 의 PlayerData 라는 저장돼는 테이블의 DataName 을 Value 의 값으로 변경
-function DataStoreLight.Set<T>(Player:Player , DataName:string , Value:T)
+function DataStoreLight.set<T>(Player:Player , DataName:string , Value:T)
     if PlayerData1[Player.UserId] then
         if PlayerData1[Player.UserId][DataName] ~= nil then
             PlayerBeforeDataInServer[Player.UserId][DataName] = PlayerData2[Player.UserId][DataName]
@@ -121,7 +121,7 @@ function DataStoreLight.Set<T>(Player:Player , DataName:string , Value:T)
 end
 
 --// DataStoreLight.DataTable 에 있는 Data 들을 하나하나 모두 저장
-function DataStoreLight.Save(Player:Player)
+function DataStoreLight.save(Player:Player)
     for k,v in DataStoreLight.DataTable do
         
         local Data1 = PlayerData1[Player.UserId][k]
@@ -152,7 +152,7 @@ function DataStoreLight.Save(Player:Player)
                 DataStoreService:GetDataStore(`{k}:1`):SetAsync(Player.UserId , `\20{Buffer_Data1}`)
             end
         end
-
+        
         if Data2 ~= nil then
             DataStoreLight:Debug(`Save for {Data2} ...`)
 
@@ -177,7 +177,7 @@ function DataStoreLight.Save(Player:Player)
 end
 
 --// DataName 파라미터가 존제한다면 그 데이터를 초기값으로 만약 존제하지 않는다면 모든 데이터를 초기값으로
-function DataStoreLight.ClearData(Player:Player , DataName:string)
+function DataStoreLight.clearData(Player:Player , DataName:string)
     if DataName then
         if DataStoreLight.DataTable[DataName] then
             if PlayerData1[Player.UserId] then
@@ -200,7 +200,7 @@ function DataStoreLight.ClearData(Player:Player , DataName:string)
 end
 
 --// DataName 파라미터가 존제하면 그 값만 이전값으로 변경 없다면 모든값을 이전값으로 변경
-function DataStoreLight.DiscardChanges(Player:Player , DataName:string)
+function DataStoreLight.discardChanges(Player:Player , DataName:string)
     if DataName then
         if DataStoreLight.DataTable[DataName] then
             if PlayerData1[Player.UserId] then
