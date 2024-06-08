@@ -2,7 +2,7 @@
 name = "kimpure/datastorelight"
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
-realm = "shared"
+realm = "server"
 
 [dependencies]
 msgpack-luau = "cipharius/msgpack-luau@^0.3.0"
