@@ -55,6 +55,7 @@ function DataStoreLight.Load(Player:Player)
         DataStoreLight:waitForRequest(Enum.DataStoreRequestType.GetAsync)
         local K2 = DataStoreService:GetDataStore(`{k}:2`):GetAsync(Player.UserId)
 
+        
         if K1 then
 
            
@@ -102,7 +103,7 @@ end
 --// DataStoreLight 의 PlayerData 라는 저장돼어있는 테이블에서 Data 를 가져옴
 function DataStoreLight.Get<T>(Player:Player , DataName:string) : {any}
     if PlayerData1[Player.UserId] then
-        if PlayerData1[Player.UserId][DataName] then
+        if PlayerData1[Player.UserId][DataName] ~= nil then
             return PlayerData1[Player.UserId][DataName] , PlayerData2[Player.UserId][DataName]
         end
     end
@@ -111,7 +112,7 @@ end
 --// DataStoreLight 의 PlayerData 라는 저장돼는 테이블의 DataName 을 Value 의 값으로 변경
 function DataStoreLight.Set<T>(Player:Player , DataName:string , Value:T)
     if PlayerData1[Player.UserId] then
-        if PlayerData1[Player.UserId][DataName] then
+        if PlayerData1[Player.UserId][DataName] ~= nil then
             PlayerBeforeDataInServer[Player.UserId][DataName] = PlayerData2[Player.UserId][DataName]
             PlayerData2[Player.UserId][DataName] = PlayerData1[Player.UserId][DataName]
             PlayerData1[Player.UserId][DataName] = Value
@@ -127,13 +128,13 @@ function DataStoreLight.Save(Player:Player)
         local Data2 = PlayerData2[Player.UserId][k]
         DataStoreLight:Debug(Data1 , Data2)
 
-        if Data1 then
+        if Data1 ~= nil then
             DataStoreLight:Debug(`Save for {Data1} ...`)
 
             local Buffer_Data1 = msgpack.utf8Encode(msgpack.encode(Data1))
             local Compress_Data1 = rbxzstd.compress(buffer.fromstring(Buffer_Data1))
             
-            -- print(Buffer_Data1 ,)
+
 
             DataStoreLight:Debug(`Data1 : {Compress_Data1}`)
             
@@ -152,7 +153,7 @@ function DataStoreLight.Save(Player:Player)
             end
         end
 
-        if Data2 then
+        if Data2 ~= nil then
             DataStoreLight:Debug(`Save for {Data2} ...`)
 
             local Buffer_Data2 = msgpack.utf8Encode(msgpack.encode(Data2))
@@ -180,7 +181,8 @@ function DataStoreLight.ClearData(Player:Player , DataName:string)
     if DataName then
         if DataStoreLight.DataTable[DataName] then
             if PlayerData1[Player.UserId] then
-                if PlayerData1[Player.UserId][DataName] then
+                if PlayerData1[Player.UserId][DataName] ~= nil then
+                    DataStoreLight.Set(Player , DataName , DataStoreLight.DataTable[DataName])
                     DataStoreLight.Set(Player , DataName , DataStoreLight.DataTable[DataName])
                 end
             end
@@ -188,8 +190,9 @@ function DataStoreLight.ClearData(Player:Player , DataName:string)
     else
         for k,v in DataStoreLight.DataTable do
             if PlayerData1[Player.UserId] then
-                if PlayerData1[Player.UserId][k] then
-                    DataStoreLight.Set(Player , DataName , v)
+                if PlayerData1[Player.UserId][k] ~= nil then
+                    DataStoreLight.Set(Player , k , v)
+                    DataStoreLight.Set(Player , k , v)
                 end
             end
         end
@@ -201,7 +204,7 @@ function DataStoreLight.DiscardChanges(Player:Player , DataName:string)
     if DataName then
         if DataStoreLight.DataTable[DataName] then
             if PlayerData1[Player.UserId] then
-                if PlayerData1[Player.UserId][DataName] then
+                if PlayerData1[Player.UserId][DataName] ~= nil then
                     PlayerData1[Player.UserId][DataName] = PlayerData2[Player.UserId][DataName]
                     PlayerData2[Player.UserId][DataName] = PlayerBeforeDataInServer[Player.UserId][DataName]
                 end
@@ -210,7 +213,7 @@ function DataStoreLight.DiscardChanges(Player:Player , DataName:string)
     else
         for k,_ in DataStoreLight.DataTable do
             if PlayerData1[Player.UserId] then
-                if PlayerData1[Player.UserId][k] then
+                if PlayerData1[Player.UserId][k] ~= nil then
                     PlayerData1[Player.UserId][k] = PlayerData2[Player.UserId][k]
                     PlayerData2[Player.UserId][k] = PlayerBeforeDataInServer[Player.UserId][k]
                 end
