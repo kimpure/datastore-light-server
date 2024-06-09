@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "DataStorePro",
   "tree": {
     "$className": "DataModel",
@@ -12,16 +11,6 @@
 
     "ReplicatedStorage":{
       "$path": "Packages"
-=======
-  "name": "DataStoreLight",
-  "tree": {
-    "$className": "DataModel",
-    "ReplicatedStorage": {
-        "$path": "Packages"
-    },
-    "ServerScriptService":{
-      "$path":"server"
->>>>>>> e9f5eae140e71619a32357665632e4e45e24661d
     }
   }
 }
