@@ -1,0 +1,16 @@
+{
+  "name": "DataStorePro",
+  "tree": {
+    "$className": "DataModel",
+
+    "ServerScriptService": {
+      "Server": {
+        "$path": "src"
+      }
+    },
+
+    "ReplicatedStorage":{
+      "$path": "Packages"
+    }
+  }
+}
