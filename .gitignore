@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # Project place file
 /DataStorePro.rbxlx
 
 # Roblox Studio lock files
 /*.rbxlx.lock
 /*.rbxl.lock
+=======
+/target
+/Packages
+/wally.lock
+>>>>>>> e9f5eae140e71619a32357665632e4e45e24661d
