@@ -1,4 +1,5 @@
 /target
 /Packages
-/wally.lock
-/sourcemap.json
+/test
+sourcemap.json
+**/*.lock
