@@ -20,7 +20,7 @@ DataStoreLight.DataTable = {
 --// Setting
 DataStoreLight.Setting = {
     Debug = false;
-    ServerCompress = true;
+    ServerCompress = false;
 }
 
 --// DataStoreLight.Setting.Debug 가 true 일떄 파라미터들을 출력
