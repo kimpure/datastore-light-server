@@ -7,7 +7,7 @@ local rbxzstd = require(ReplicatedStorage:WaitForChild('rbxzstd'))
 local base91 = require(ReplicatedStorage:WaitForChild('base91'))
 
 
-
+--// DataStore 제한회수
 function waitForRequest(requestType:Enum.DataStoreRequestType , num:number)
     local current = DataStoreService:GetRequestBudgetForRequestType(requestType)
     while current < num do
@@ -25,7 +25,7 @@ local playerdatas = {} :: {
     [number]: {}
 }
 
-type DataTable = string
+type DataTable = string 
 type DataStoreLightImpl = {
 	__index: DataStoreLightImpl;
 	new: (player:Player)->(DataStoreLight);
@@ -86,8 +86,8 @@ end
 
 function datastorelight.set(self , dataname:string , value:any)
     local player = self.player :: Player;
-    --// main
     playerdatas[player.UserId][dataname][2] = playerdatas[player.UserId][dataname][1];
+    --// main
     playerdatas[player.UserId][dataname][1] = value;
 end
 
@@ -95,26 +95,26 @@ function datastorelight.save(self)
     local player = self.player :: Player
     --// main
     for k,_ in datatable do
-        waitForRequest(Enum.DataStoreRequestType.SetIncrementAsync , 4)
         local this = {
             playerdatas[player.UserId][k][1];
             playerdatas[player.UserId][k][2];
         }
-
+        
         if not this[1] then
             return
         end
-
+        
         for i=1 , 2 do
             local temp = msgpack.utf8Encode( msgpack.encode( this[i] ) ) 
             local temp2 = rbxzstd.compress( buffer.fromstring( temp ) )
-    
+            
             this[i] = if (temp2) then
                 '\20'..base91.decodeString( temp2 )
             else
                 '\30'..temp
         end
-
+            
+        waitForRequest(Enum.DataStoreRequestType.SetIncrementAsync , 4)
         DataStoreService:GetDataStore(`{k}:1`):SetAsync(player.UserId , this[1]);
         DataStoreService:GetDataStore(`{k}:2`):SetAsync(player.UserId , this[2]);
     end
