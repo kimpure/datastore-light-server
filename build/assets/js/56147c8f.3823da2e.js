@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[167],{3891:e=>{e.exports=JSON.parse('{"sourceUrl":"https://github.com/kimpure/DataStorePro/blob/master","baseUrl":"/DataStorePro/","classOrder":[],"apiCategories":[]}')}}]);
