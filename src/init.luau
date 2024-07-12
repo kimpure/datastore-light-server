@@ -18,28 +18,29 @@ end
 
 
 local datatable = {
-    ___coin = 10;
+    ___coin = {1 , 2, 3 , 4,  5,  6};
 }
 
 local playerdatas = {} :: {
     [number]: {}
 }
 
-type datastorelightImpl = {
-	__index: datastorelightImpl;
-	new: (player:Player)->(datastorelight);
-    get: (self:datastorelight , dataname:string)->();
-    set: (self:datastorelight , dataname:string , value:any)->();
-    save: (self:datastorelight)->();
+type DataTable = string
+type DataStoreLightImpl = {
+	__index: DataStoreLightImpl;
+	new: (player:Player)->(DataStoreLight);
+    get: (self:DataStoreLight , dataname:DataTable)->();
+    set: (self:DataStoreLight , dataname:DataTable , value:any)->();
+    save: (self:DataStoreLight)->();
 }
 
 --// $Types
-export type datastorelight = typeof(setmetatable({} :: {
+export type DataStoreLight = typeof(setmetatable({} :: {
 	player: Player;
-}, {} :: datastorelightImpl));
+}, {} :: DataStoreLightImpl));
 
 
-local datastorelight = {} :: datastorelightImpl
+local datastorelight = {} :: DataStoreLightImpl
 datastorelight.__index = datastorelight
 
 --// \10 은 rbxzstd 으로 압축 안했을때 나오는 데이터
