@@ -11,12 +11,14 @@ local PlayerBeforeDataInServer = {}
 
 local DataStoreLight = {}
 
-
 --// DataTable
+
+--[=[
+    moonwavetesting
+]=]
 DataStoreLight.DataTable = {
     eee = 0;
 }
-
 --// Setting
 DataStoreLight.Setting = {
     Debug = false;
@@ -24,6 +26,12 @@ DataStoreLight.Setting = {
 }
 
 --// DataStoreLight.Setting.Debug 가 true 일떄 파라미터들을 출력
+
+
+--[=[
+    @class Example
+    Example is a simple class that demonstrates Moonwave documentation.
+]=]
 function DataStoreLight:Debug(message , ...)
     if self.Setting.Debug then
         print(message , ...)
@@ -61,19 +69,8 @@ function DataStoreLight.load(Player:Player)
 
             
                 local _o = string.sub(K1 , 1 , 1)
-                K1 = string.sub(K1 , 2)
 
-                if _o == '\20' then
-                    DataStoreLight:Debug(`압축돼지 않은 데이터 : {K1}`)
-
-                    K1 = msgpack.decode(msgpack.utf8Decode(K1))
-                else
-                    DataStoreLight:Debug(`압축돼어있는 데이터 : {K1}`)
-                    
-                    K1 = msgpack.decode(msgpack.utf8Decode(buffer.tostring(rbxzstd.decompress(base91.decodeString(K1)))))
-                end
-
-                PlayerData1[Player.UserId][k] = K1
+                PlayerData1[Player.UserId][k] = msgpack.decode(msgpack.utf8Decode(((_o=='\20') and K1) or buffer.tostring(rbxzstd.decompress(base91.decodeString(K1)))))
             else
 
                 PlayerData1[Player.UserId][k] = v
@@ -82,21 +79,10 @@ function DataStoreLight.load(Player:Player)
 
             if K2 then
 
-
-                local _o = string.sub(K2 , 1 , 1)
-                K2 = string.sub(K2 , 2)
-
-                if _o == '\20' then
-                    DataStoreLight:Debug(`압축돼지 않은 데이터 : {K2}`)
-
-                    K2 = msgpack.decode(msgpack.utf8Decode(K2))
-                else
-                    DataStoreLight:Debug(`압축돼어있는 데이터 : {K2}`)
-
-                    K2 = msgpack.decode(msgpack.utf8Decode(buffer.tostring(rbxzstd.decompress(base91.decodeString(K2)))))
-                end
                 
-                PlayerData2[Player.UserId][k] = K2
+                local _o = string.sub(K2 , 1 , 1)
+
+                PlayerData2[Player.UserId][k] = msgpack.decode(msgpack.utf8Decode(((_o=='\20') and K2) or buffer.tostring(rbxzstd.decompress(base91.decodeString(K2)))))
             end
         else
             --// ClientCompress , 매직넘버 있는상태로 바로 변수에 꽃아버림
