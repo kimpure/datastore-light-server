@@ -8,51 +8,38 @@
 # How To Use?
 
 ```lua
+--!strict
 local Players = game:GetService("Players")
-local DataStoreLight = require(script.Parent:WaitForChild('DataStoreLight'))
+local datastorelight = require(script.Parent)
 Players.PlayerAdded:Connect(function(player)
-    DataStoreLight.Load(player)
-    print(DataStoreLight.Get(player , 'eee'))
-    local th = {}
-	for i=1 , 50 do
-		th[i] = {'arr 인대 string 으로 데이터를 뿔리기'}
-	end
-    DataStoreLight.Set(player , 'eee' , th)
-    print(DataStoreLight.Get(player , 'eee'))
-    DataStoreLight.DiscardChanges(player)
-    print(DataStoreLight.Get(player , 'eee'))
-    DataStoreLight.Save(player)
+    local newDataStore=datastorelight.new(player)
+    print(newDataStore:get('___coin'))
+    newDataStore:set('___coin' , 800)
+
+    Players.PlayerRemoving:Connect(function(_player)
+        newDataStore:save()
+    end)
 end)
+
+
 ```
 
-Load
+.new
 ```lua
-DataStoreLight.Load(Player:Player)
+newDataStore=datastorelight.new(player)
 ```
 
 Save
 ```lua
-DataStoreLight.Save(Player:Player)
+newDataStore:save()
 ```
 
 Get
 ```lua
-DataStoreLight.Get(Player:Player , DataName:string) : any
+ print(newDataStore:get('___coin'))
 ```
 
 Set
 ```lua
-DataStoreLight.Set<T>(Player:Player , DataName:string , Value:T)
-```
-
-ClearData
-```lua
---// DataName 이 없다면 모든값을 초기화
-DataStoreLight.ClearData(Player:Player , DataName:string)
-```
-
-DiscardChanges
-```lua
---// DataName 이 없다면 모든값을 이전으로
-DataStoreLight.DiscardChanges(Player:Player , DataName:string)
+newDataStore:set('___coin' , 800)
 ```

@@ -8,3 +8,7 @@ config.json
 .vscode
 default.project.json
 package-lock.json
+build
+moonwave.json
+aftman.toml
+DataStoreLight.zip
