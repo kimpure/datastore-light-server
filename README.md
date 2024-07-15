@@ -7,39 +7,4 @@
 
 # How To Use?
 
-```lua
---!strict
-local Players = game:GetService("Players")
-local datastorelight = require(script.Parent)
-Players.PlayerAdded:Connect(function(player)
-    local newDataStore=datastorelight.new(player)
-    print(newDataStore:get('___coin'))
-    newDataStore:set('___coin' , 800)
-
-    Players.PlayerRemoving:Connect(function(_player)
-        newDataStore:save()
-    end)
-end)
-
-
-```
-
-.new
-```lua
-newDataStore=datastorelight.new(player)
-```
-
-Save
-```lua
-newDataStore:save()
-```
-
-Get
-```lua
- print(newDataStore:get('___coin'))
-```
-
-Set
-```lua
-newDataStore:set('___coin' , 800)
-```
+아직 만드는중이라 README.md 는 없어요..ㅠ
