@@ -28,9 +28,9 @@ end
 
 function unPack(data:any)
     return if (string.sub(data , 1 , 1) == '\30') then
-        msgpack.decode( msgpack.utf8Decode( string.sub(data , 2) ) )
+        msgpack.decode(msgpack.utf8Decode(string.sub(data , 2)))
     else
-        msgpack.decode( msgpack.utf8Decode( buffer.tostring( rbxzstd.decompress( base91.decodeString( string.sub(data , 2) ) ) ) ) )
+        msgpack.decode(msgpack.utf8Decode(buffer.tostring(rbxzstd.decompress(base91.decodeString(string.sub(data , 2))))))
 end
 
 function dataStoreLight.init(player:Player)
