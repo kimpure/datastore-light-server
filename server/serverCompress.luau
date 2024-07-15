@@ -2,9 +2,10 @@
 
 local DataStoreService = game:GetService("DataStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local msgpack = require(ReplicatedStorage:WaitForChild('msgpack-luau'))
-local rbxzstd = require(ReplicatedStorage:WaitForChild('rbxzstd'))
-local base91 = require(ReplicatedStorage:WaitForChild('base91'))
+local Packages = ReplicatedStorage:WaitForChild('Packages')
+local msgpack = require(Packages:WaitForChild('msgpack-luau'))
+local rbxzstd = require(Packages:WaitForChild('rbxzstd'))
+local base91 = require(Packages:WaitForChild('base91'))
 
 
 --// DataStore 제한회수
@@ -17,9 +18,7 @@ function waitForRequest(requestType:Enum.DataStoreRequestType , num:number)
 end
 
 
-local datatable = {
-    ___coin = {1 , 2, 3 , 4,  5,  6};
-}
+local datatable = require(script.Parent:WaitForChild("DATATABLE"))
 
 local playerdatas = {} :: {
     [number]: {}
@@ -42,7 +41,6 @@ export type DataStoreLight = typeof(setmetatable({} :: {
 
 local datastorelight = {} :: DataStoreLightImpl
 datastorelight.__index = datastorelight
-
 --// \10 은 rbxzstd 으로 압축 안했을때 나오는 데이터
 function datastorelight.new(player:Player)
     local self = {}
