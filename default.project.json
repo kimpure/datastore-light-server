@@ -1,0 +1,12 @@
+{
+  "name": "DataStorePro",
+  "tree": {
+    "$className": "DataModel",
+
+    "ServerScriptService": {
+      "dataStore-Light": {
+        "$path": "init.luau"
+        }
+    }
+  }
+}

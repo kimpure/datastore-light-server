@@ -7,4 +7,3 @@
 
 # How To Use?
 
-아직 만드는중이라 README.md 는 없어요..ㅠ

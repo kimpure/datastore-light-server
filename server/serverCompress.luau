@@ -20,10 +20,6 @@ end
 
 local datatable = require(script.Parent:WaitForChild("DATATABLE"))
 
-local playerdatas = {} :: {
-    [number]: {}
-}
-
 type DataTable = string 
 type DataStoreLightImpl = {
 	__index: DataStoreLightImpl;
@@ -35,7 +31,8 @@ type DataStoreLightImpl = {
 
 --// $Types
 export type DataStoreLight = typeof(setmetatable({} :: {
-	player: Player;
+	player: Player,
+    data: { [string]: { [number]: any } },
 }, {} :: DataStoreLightImpl));
 
 
@@ -70,23 +67,21 @@ function datastorelight.new(player:Player)
         self[k] = this
     end
 
-    playerdatas[player.UserId] = self
-
-    return setmetatable({player=player::Player} , datastorelight)
+    return setmetatable({
+        player=player,
+        data = {},        
+    } , datastorelight)
 end
 
 function datastorelight.get(self , dataname:string)
-    local player = self.player :: Player;
-    local this = playerdatas[player.UserId][dataname] :: {[number]: {any}};
-    --// main
-    return this[1] , this[2]
+    return self.data[dataname][1] , self.data[dataname][1]
 end
 
 function datastorelight.set(self , dataname:string , value:any)
     local player = self.player :: Player;
-    playerdatas[player.UserId][dataname][2] = playerdatas[player.UserId][dataname][1];
+    self.data[dataname][2] = self.data[dataname][1]
     --// main
-    playerdatas[player.UserId][dataname][1] = value;
+    self.data[dataname][1] = value;
 end
 
 function datastorelight.save(self)
@@ -94,8 +89,8 @@ function datastorelight.save(self)
     --// main
     for k,_ in datatable do
         local this = {
-            playerdatas[player.UserId][k][1];
-            playerdatas[player.UserId][k][2];
+            self.data[k :: string][1],
+            self.data[k :: string][2],
         }
         
         if not this[1] then

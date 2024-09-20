@@ -1,4 +1,5 @@
 --!strict
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local datastorelight = ReplicatedStorage:WaitForChild('Packages')
@@ -11,4 +12,3 @@ Players.PlayerAdded:Connect(function(player)
         newDataStore:save()
     end)
 end)
-
