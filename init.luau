@@ -79,10 +79,6 @@ function datastorelight.save(self)
         if v[1] == nil then
             if not saveNil then
                 return
-            else
-                if v[2] == nil then
-                    return
-                end
             end
         end
         
