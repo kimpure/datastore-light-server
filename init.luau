@@ -6,8 +6,9 @@ local msgpack = require(Packages:WaitForChild('msgpack-luau'))
 local rbxzstd = require(Packages:WaitForChild('rbxzstd'))
 local base91 = require(Packages:WaitForChild('base91'))
 
+local saveNil = false
 
-function waitForRequest(requestType:Enum.DataStoreRequestType , num:number)
+function waitForRequest(requestType: Enum.DataStoreRequestType, num: number)
     local current = DataStoreService:GetRequestBudgetForRequestType(requestType)
     while current < num do
         current = DataStoreService:GetRequestBudgetForRequestType(requestType)
@@ -16,17 +17,17 @@ function waitForRequest(requestType:Enum.DataStoreRequestType , num:number)
 end
 
 type DataStoreLightImpl = {
-	__index: DataStoreLightImpl;
+	__index: DataStoreLightImpl,
 	new: (key: string | number) -> (DataStoreLight),
     get: (self: DataStoreLight, dataname: string) -> (),
-    set: (self: DataStoreLight, dataname: string , value: any) -> (),
+    set: (self: DataStoreLight, dataname: string, value: any) -> (),
     save: (self: DataStoreLight) -> (),
 }
 
 export type DataStoreLight = typeof(setmetatable({} :: {
 	key: number | string,
     data: { [string]: { [number]: any } },
-}, {} :: DataStoreLightImpl));
+}, {} :: DataStoreLightImpl))
 
 
 local datastorelight = {} :: DataStoreLightImpl
@@ -36,62 +37,64 @@ function datastorelight.new(key: string | number)
     return setmetatable({
         key=key,
         data = {},        
-    } , datastorelight)
+    }, datastorelight)
 end
 
 function datastorelight.get(self, dataname)
     if self.data[dataname] == nil then
-        waitForRequest(Enum.DataStoreRequestType.GetAsync , 4)
+        waitForRequest(Enum.DataStoreRequestType.GetAsync, 4)
         local this = {
-            DataStoreService:GetDataStore(`{dataname}:1`):GetAsync(self.key);
-            DataStoreService:GetDataStore(`{dataname}:2`):GetAsync(self.key);
+            DataStoreService:GetDataStore(`{dataname}:1`):GetAsync(self.key),
+            DataStoreService:GetDataStore(`{dataname}:2`):GetAsync(self.key),
         }
 
         if not this[1] then
             this[1] = nil
         else
-            this[1] = if (string.sub(this[1] , 1 , 1) == '\30') then
-                    msgpack.decode( msgpack.utf8Decode( string.sub(this[1] , 2) ) )
+            this[1] = if (string.sub(this[1], 1, 1) == '\30') then
+                    msgpack.decode(msgpack.utf8Decode(string.sub(this[1], 2)))
                 else
-                    msgpack.decode( msgpack.utf8Decode( buffer.tostring( rbxzstd.decompress( base91.decodeString( string.sub(this[1] , 2) ) ) ) ) )
+                    msgpack.decode(msgpack.utf8Decode(buffer.tostring(rbxzstd.decompress(base91.decodeString(string.sub(this[1], 2))))))
         end
 
         if this[2] then
-            this[2] = if (string.sub(this[2] , 1 , 1) == '\30') then
-                msgpack.decode( msgpack.utf8Decode( string.sub(this[2] , 2) ) )
+            this[2] = if (string.sub(this[2], 1, 1) == '\30') then
+                msgpack.decode(msgpack.utf8Decode(string.sub(this[2], 2)))
             else
-                msgpack.decode( msgpack.utf8Decode( buffer.tostring( rbxzstd.decompress( base91.decodeString( string.sub(this[2] , 2) ) ) ) ) )
+                msgpack.decode(msgpack.utf8Decode(buffer.tostring(rbxzstd.decompress(base91.decodeString(string.sub(this[2], 2))))))
         end
 
         self.data[dataname] = this
     end
-    return self.data[dataname][1] , self.data[dataname][2]
+    return self.data[dataname][1], self.data[dataname][2]
 end
 
 function datastorelight.set(self, dataname, value)
     self.data[dataname][2] = self.data[dataname][1]
-    self.data[dataname][1] = value;
+    self.data[dataname][1] = value
 end
 
 function datastorelight.save(self)
     for k, v in self.data do
         if v[1] == nil then
-            return
+            if not saveNil then
+                return
+            end
         end
         
-        for i=1 , 2 do
-            local temp = msgpack.utf8Encode( msgpack.encode( v[i] ) ) 
-            local temp2 = rbxzstd.compress( buffer.fromstring( temp ) )
+        for i=1, 2 do
+            local temp = msgpack.utf8Encode(msgpack.encode(v[i])) 
+            local temp2 = rbxzstd.compress(buffer.fromstring(temp))
             
             v[i] = if (temp2) then
-                '\20'..base91.decodeString( temp2 )
+                '\20'..base91.decodeString(temp2)
             else
                 '\30'..temp
         end
             
-        waitForRequest(Enum.DataStoreRequestType.SetIncrementAsync , 4)
-        DataStoreService:GetDataStore(`{k}:1`):SetAsync(self.key, v[1]);
-        DataStoreService:GetDataStore(`{k}:2`):SetAsync(self.key, v[2]);
+        waitForRequest(Enum.DataStoreRequestType.SetIncrementAsync, 4)
+        DataStoreService:GetDataStore(`{k}:1`):SetAsync(self.key, v[1])
+        DataStoreService:GetDataStore(`{k}:2`):SetAsync(self.key, v[2])
     end
 end
 
