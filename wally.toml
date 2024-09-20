@@ -1,9 +1,9 @@
 [package]
-name = "kimpure/datastorelight"
-version = "0.1.0"
+name = "kimpure/datastore-light"
+version = "0.1.3"
 registry = "https://github.com/UpliftGames/wally-index"
-realm = "server"
-license = "AGPL-3.0"
+realm = "shared"
+license = "MIT"
 
 [dependencies]
 msgpack-luau = "cipharius/msgpack-luau@^0.3.0"
