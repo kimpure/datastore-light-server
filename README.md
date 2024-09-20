@@ -6,6 +6,7 @@ datastore-light = "kimpure/datastore-light@0.1.3"
 ```
 
 ## How To Use
+wally.toml
 ```luau
 --!strict
 
