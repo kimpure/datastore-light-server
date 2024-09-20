@@ -6,8 +6,6 @@ local msgpack = require(Packages:WaitForChild('msgpack-luau'))
 local rbxzstd = require(Packages:WaitForChild('rbxzstd'))
 local base91 = require(Packages:WaitForChild('base91'))
 
-local saveNil = false
-
 function waitForRequest(requestType: Enum.DataStoreRequestType, num: number)
     local current = DataStoreService:GetRequestBudgetForRequestType(requestType)
     while current < num do
@@ -27,6 +25,7 @@ type DataStoreLightImpl = {
 export type DataStoreLight = typeof(setmetatable({} :: {
 	key: number | string,
     data: { [string]: { [number]: any } },
+    _onSet: boolean,
 }, {} :: DataStoreLightImpl))
 
 
@@ -36,7 +35,8 @@ datastorelight.__index = datastorelight
 function datastorelight.new(key: string | number)
     return setmetatable({
         key=key,
-        data = {},        
+        data={},        
+        _onSet=false,
     }, datastorelight)
 end
 
@@ -72,12 +72,13 @@ end
 function datastorelight.set(self, dataname, value)
     self.data[dataname][2] = self.data[dataname][1]
     self.data[dataname][1] = value
+    self._onSet = true
 end
 
 function datastorelight.save(self)
     for k, v in self.data do
         if v[1] == nil then
-            if not saveNil then
+            if not self._onSet then
                 return
             end
         end
