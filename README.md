@@ -6,4 +6,4 @@
 
 
 # How To Use?
-
+[you can use version](https://github.com/kimpure/datastore-light/blob/main/server/serverCompress.luau)
