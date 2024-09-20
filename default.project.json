@@ -3,10 +3,13 @@
   "tree": {
     "$className": "DataModel",
 
-    "ServerScriptService": {
-      "dataStore-Light": {
-        "$path": "init.luau"
-        }
+    "ReplicatedStorage": {
+      "Packages": {
+        "$path": "Packages"
+      },
+      "dataStoreLight": {
+        "$path": "src"
+      }
     }
   }
 }
