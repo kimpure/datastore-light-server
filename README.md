@@ -3,7 +3,7 @@
 ## Install
 wally.toml
 ```
-datastore-light = "kimpure/datastore-light@0.1.3"
+datastore-light = "kimpure/datastore-light@0.1.6"
 ```
 
 ## How To Use
@@ -23,3 +23,6 @@ Players.PlayerAdded:Connect(function(player)
     end)
 end)
 ```
+
+## wally
+https://wally.run/package/kimpure/datastore-light?version=0.1.6
