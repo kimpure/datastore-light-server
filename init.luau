@@ -84,13 +84,13 @@ function datastorelight.save(self)
         end
         
         for i=1, 2 do
-            local temp = msgpack.utf8Encode(msgpack.encode(v[i])) 
-            local temp2 = rbxzstd.compress(buffer.fromstring(temp))
+            local bufferData = msgpack.utf8Encode(msgpack.encode(v[i])) 
+            local compressData = rbxzstd.compress(buffer.fromstring(bufferData))
             
-            v[i] = if (temp2) then
-                '\20'..base91.decodeString(temp2)
+            v[i] = if (compressData) then
+                '\20'..base91.decodeString(compressData)
             else
-                '\30'..temp
+                '\30'..bufferData
         end
             
         waitForRequest(Enum.DataStoreRequestType.SetIncrementAsync, 4)
