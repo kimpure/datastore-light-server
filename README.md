@@ -24,5 +24,6 @@ end)
 
 Players.PlayerRemoving:Connect(function(player)
     data[player]:save()
+    data[player] = nil
 end)
 ```
