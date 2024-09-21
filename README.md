@@ -3,7 +3,7 @@
 ## Install
 wally.toml
 ```
-datastore-light = "kimpure/datastore-light@^0.1.8"
+datastore-light = "kimpure/datastore-light@^0.2.2"
 ```
 
 ## How To Use

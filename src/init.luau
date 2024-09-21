@@ -1,10 +1,9 @@
 --!strict
 local DataStoreService = game:GetService("DataStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Packages = ReplicatedStorage:WaitForChild('Packages')
-local msgpack = require(Packages:WaitForChild('msgpack-luau'))
-local rbxzstd = require(Packages:WaitForChild('rbxzstd'))
-local base91 = require(Packages:WaitForChild('base91'))
+local msgpack = require(script.Parent:WaitForChild('msgpack-luau')) :: typeof(require('./Packages/msgpack-luau'))
+local rbxzstd = require(script.Parent:WaitForChild('rbxzstd')) :: typeof(require('./Packages/rbxzstd'))
+local base91 = require(script.Parent:WaitForChild('base91')) :: typeof(require('./Packages/rbxzstd'))
 
 function waitForRequest(requestType: Enum.DataStoreRequestType, num: number)
     local current = DataStoreService:GetRequestBudgetForRequestType(requestType)
