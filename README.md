@@ -12,7 +12,7 @@ datastore-light = "kimpure/datastore-light@^0.2.2"
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local datastorelight = require('./init') --// path (Instance)
+local datastorelight = require(path to) --// path (Instance)
 
 Players.PlayerAdded:Connect(function(player)
     local newDataStore=datastorelight.new(player.UserId)
