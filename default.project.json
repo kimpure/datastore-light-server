@@ -1,12 +1,6 @@
 {
-  "name": "DataStorePro",
+  "name": "datastore-light",
   "tree": {
-    "$className": "DataModel",
-
-    "ReplicatedStorage": {
-      "Packages": {
-        "$path": "Packages"
-      }
-    }
+    "$path": "src"
   }
 }
