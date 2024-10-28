@@ -1,6 +1,6 @@
 [package]
 name = "kimpure/datastore-light"
-version = "0.2.2"
+version = "0.2.9"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 license = "MIT"

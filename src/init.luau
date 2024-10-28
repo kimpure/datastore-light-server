@@ -16,7 +16,7 @@ end
 type DataStoreLightImpl = {
 	__index: DataStoreLightImpl,
 	new: (key: string | number) -> (DataStoreLight),
-    get: (self: DataStoreLight, dataname: string) -> (),
+    get: (self: DataStoreLight, dataname: string) -> (any, any),
     set: (self: DataStoreLight, dataname: string, value: any) -> (),
     save: (self: DataStoreLight) -> (),
 }
