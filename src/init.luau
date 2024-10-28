@@ -43,8 +43,8 @@ function datastorelight.get(self, dataname)
     if self.data[dataname] == nil then
         waitForRequest(Enum.DataStoreRequestType.GetAsync, 4)
         local this = {
-            DataStoreService:GetDataStore(`{dataname}:1`):GetAsync(self.key),
-            DataStoreService:GetDataStore(`{dataname}:2`):GetAsync(self.key),
+            DataStoreService:GetDataStore(`{dataname}:1`):GetAsync(self.key :: string),
+            DataStoreService:GetDataStore(`{dataname}:2`):GetAsync(self.key :: string),
         }
 
         if not this[1] then
@@ -84,8 +84,11 @@ function datastorelight.save(self)
         
         for i=1, 2 do
             local bufferData = msgpack.utf8Encode(msgpack.encode(v[i])) 
-            local compressData = rbxzstd.compress(buffer.fromstring(bufferData))
-            
+            local compressData
+            pcall(function()
+                compressData = rbxzstd.compress(buffer.fromstring(bufferData))
+            end)
+
             v[i] = if (compressData) then
                 '\20'..base91.decodeString(compressData)
             else
@@ -93,8 +96,8 @@ function datastorelight.save(self)
         end
             
         waitForRequest(Enum.DataStoreRequestType.SetIncrementAsync, 4)
-        DataStoreService:GetDataStore(`{k}:1`):SetAsync(self.key, v[1])
-        DataStoreService:GetDataStore(`{k}:2`):SetAsync(self.key, v[2])
+        DataStoreService:GetDataStore(`{k}:1`):SetAsync(self.key :: string, v[1])
+        DataStoreService:GetDataStore(`{k}:2`):SetAsync(self.key :: string, v[2])
     end
 end
 
