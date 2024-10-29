@@ -69,6 +69,9 @@ function datastorelight.get(self, dataname)
 end
 
 function datastorelight.set(self, dataname, value)
+    if not self.data[dataname] then
+        self:get(dataname)
+    end
     self.data[dataname][2] = self.data[dataname][1]
     self.data[dataname][1] = value
     self._onSet = true
